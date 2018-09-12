@@ -1,0 +1,63 @@
+
+<% if action == :new %>
+  <% button_val = "create" %>
+  <% action_url = "cats_url" %>
+<% elsif action == :edit %>
+  <% button_val = "edit" %>
+  <% action_url = "cats_url(@cats)" %>
+<% end %>
+
+<form action="<%= action_url %>" method="post">
+  <input type="hidden" name="authenticity_token" 
+  value="<% form_authenticity_token %>">
+  <% if action == :edit %>
+  <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+  
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="cats[name]" value="<%= cats.name %>">
+  
+  <br>
+  
+  <label for="birth_date">Birth Date:</label>
+  <input type="text" id="birth_date" name="cats[birth_date]" 
+  value="<%= cats.birth_date %>">
+  <br>
+  
+  <% if action == 'edit' %>
+  <label for="color">Color:</label>
+  <select id="color" name="cats[color]">
+    <option disabled> --Please Select-- </option>
+    <option value="orange" <%= cats.color == "orange" ? "selected" : ""%> >Orange</option>
+    <option value="black" <%= cats.color == "black" ? "selected" : ""%> >Black</option>
+    <option value="white" <%= cats.color == "white" ? "selected" : ""%> >White</option>  
+    <option value="gray" <%= cats.color == "gray" ? "selected" : ""%> >Gray</option>  
+  </select>
+  <% elsif action == 'new' %>
+  
+  <label for="color">Color:</label>
+  <select id="color" name="cats[color]">
+    <option disabled selected> --Please Select-- </option>
+    <option value="orange">Orange</option>
+    <option value="black">Black</option>
+    <option value="white">White</option>  
+    <option value="gray">Gray</option>  
+  </select>
+  <% end %>
+  
+  <br>
+  
+  <label for="description">Description:</label>
+  <textarea type="text" id="description" name="cats[description]">
+  <%= cats.description %></textarea>
+  
+  <br>
+  
+  <label for="sex">Sex:</label>
+  <input type="text" id="sex" name="cats[sex]" value="<%= cats.sex %>">
+  
+  <br>
+  
+  <input type="submit" value=" <%= button_val %>">
+  
+</form>
